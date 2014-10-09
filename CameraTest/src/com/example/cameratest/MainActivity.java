@@ -46,7 +46,8 @@ public class MainActivity extends Activity {
     //It is told that we need camera action, and the results should be saved in a location that is sent to the intent.
     public void takeAPhoto() {
 		
-    	String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyCameraTest";
+    	String path = Environment.getExternalStorageDirectory().getAbsolutePath() + 
+    			"/MyCameraTest";
 		File folder = new File(path);
 		
 		if (!folder.exists()){
@@ -59,23 +60,21 @@ public class MainActivity extends Activity {
 		File imageFile = new File(imagePathAndFileName);
 		imageFileUri = Uri.fromFile(imageFile);
 		
-		//TODO: Add your code here ...
-		//TODO: Add your code here ...
-		//TODO: Add your code here ...
-
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+		startActivityForResult(intent, CAMERA_ACTIVITY_REQUEST_CODE);
     }
-    
+    private final int CAMERA_ACTIVITY_REQUEST_CODE = 12345;
     //This method is run after returning back from camera activity:
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-    	if (requestCode == 12345){
+    	if (requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
 			TextView tv = (TextView)findViewById(R.id.status);
 			
 			if (resultCode == RESULT_OK){
-			//TODO: Add your code here ...
-			//TODO: Add your code here ...
-			//TODO: Add your code here ...
-			//TODO: Add your code here ...
+				tv.setText("Photo completed!");
+				ImageButton ib  = (ImageButton)findViewById(R.id.TakeAPhoto);
+				ib.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));				
 			}
 			else
 				if (resultCode == RESULT_CANCELED){
